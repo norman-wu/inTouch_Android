@@ -30,6 +30,18 @@ public class TabActivity extends FragmentActivity implements
         viewPager = (ViewPager) findViewById(R.id.pager);
         actionBar = getActionBar();
         mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+        
+        FragmentViewPagerItem nearbyFragment = new FragmentViewPagerItem(
+                "Nearby", Nearby_fragment.class);
+        mAdapter.addFragment(nearbyFragment);
+        
+        FragmentViewPagerItem contactsFragment = new FragmentViewPagerItem(
+                "Contacts", Contacts_fragment.class);
+        mAdapter.addFragment(contactsFragment);
+        
+        FragmentViewPagerItem profileFragment = new FragmentViewPagerItem(
+                "Profile", Profile_fragment.class);
+        mAdapter.addFragment(profileFragment);
  
         viewPager.setAdapter(mAdapter);
         actionBar.setHomeButtonEnabled(false);
@@ -40,7 +52,7 @@ public class TabActivity extends FragmentActivity implements
             actionBar.addTab(actionBar.newTab().setText(tab_name)
                     .setTabListener(this));
         }
- 
+         
         /**
          * on swiping the viewpager make respective tab selected
          * */

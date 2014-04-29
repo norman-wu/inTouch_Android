@@ -2,29 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:textAlignment="textStart"
     tools:context="team12.intouch.ProfileActivity$PlaceholderFragment" >
-
-    <TextView
-        android:id="@+id/usernameView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/imageView1"
-        android:layout_below="@+id/imageView1"
-        android:layout_marginTop="96dp"
-        android:text="" />
-
-    <TextView
-        android:id="@+id/emailView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/textView1"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="55dp"
-        android:text="" />
 
     <ImageView
         android:id="@+id/profilePic"
@@ -33,6 +13,25 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
-        android:src="@drawable/default_profile" />
+        android:src="@drawable/default_profile"
+        android:contentDescription="@string/user_profile_picture" />
+
+    <TextView
+        android:id="@+id/usernameView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/profilePic"
+        android:textAlignment="center"
+        android:textSize="@dimen/abc_action_bar_progress_bar_size" />
+
+    <TextView
+        android:id="@+id/emailView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/usernameView"
+        android:textAlignment="center"
+        android:textSize="@dimen/abc_action_bar_progress_bar_size" />
 
 </RelativeLayout>

@@ -1,12 +1,16 @@
 package team12.intouch;
 
+import java.text.DecimalFormat;
 import java.util.Locale;
 
 import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -18,7 +22,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import team12.intouch.entities.*;
+import android.content.*;
 public class Signup_fragment extends Fragment implements OnClickListener{
 	
 	private Button signUp;
@@ -26,7 +31,11 @@ public class Signup_fragment extends Fragment implements OnClickListener{
 	private EditText email;
 	private EditText pwd;
 	private EditText pwdConfirm;
-	
+
+  //private Location lastLocation = null;
+  private Location currentLocation = null;
+  private static Context mContext;
+  
 	@Override
     public void onCreate(Bundle savedInstanceState) {
      // TODO Auto-generated method stub
@@ -113,15 +122,30 @@ public class Signup_fragment extends Fragment implements OnClickListener{
     
 	return v;
 }
+  
     
 	private void signUp(final String mUsername, String mEmail, String mPassword) {
 		// TODO Auto-generated method stub
 		Toast.makeText(getActivity().getApplicationContext(), mUsername, Toast.LENGTH_SHORT).show();
+		//----------------GPS------------------
+	    GPSAPI loc = new GPSAPI();
+	    Context mcontext = null;
+		loc.createGPS(this.getActivity().getApplicationContext());
+	    //ParseGeoPoint myPoint = new ParseGeoPoint(loc.getLatitude(),loc.getLongitude());
+	    
+	    String str = new DecimalFormat("#").format(loc.getLatitude());
+	    
+	    Log.e("GPS", str);
+	    str = new DecimalFormat("#").format(loc.getLongitude());
+	    Log.e("GPS", str);
+	    
+	    
 		ParseUser user = new ParseUser();
 		user.setUsername(mUsername);
 		user.setPassword(mPassword);
 		user.setEmail(mEmail);
-		 
+		
+		
 		user.signUpInBackground(new SignUpCallback() {
 		  public void done(ParseException e) {
 		    if (e == null) {

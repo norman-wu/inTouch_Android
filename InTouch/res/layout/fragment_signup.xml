@@ -1,0 +1,83 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="mobile08723.intouch.MainActivity$PlaceholderFragment" >
+
+   <EditText
+       android:id="@+id/usernameSignup"
+       android:layout_width="250dp"
+       android:layout_height="wrap_content"
+       android:layout_alignParentTop="true"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="29dp"
+       android:ems="10"
+       android:hint="@string/usernameHint"
+       android:inputType="text"
+       android:maxLength="15" >
+
+       <requestFocus />
+   </EditText>
+
+     <EditText
+         android:id="@+id/email"
+         android:layout_width="250dp"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/usernameSignup"
+         android:layout_alignRight="@+id/usernameSignup"
+         android:layout_below="@+id/usernameSignup"
+         android:layout_centerHorizontal="true"
+         android:layout_marginTop="29dp"
+         android:ems="10"
+         android:hint="@string/email"
+         android:inputType="textEmailAddress">
+
+   </EditText>
+   
+   <EditText
+       android:id="@+id/passwordSignup"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/email"
+       android:layout_alignRight="@+id/email"
+       android:layout_below="@+id/email"
+       android:layout_marginTop="25dp"
+       android:ems="10"
+       android:hint="@string/pwdHint"
+       android:imeActionId="@+id/login"
+       android:imeOptions="actionUnspecified"
+       android:inputType="textPassword"
+       android:maxLines="1"
+       android:singleLine="true" />
+   
+     <EditText
+         android:id="@+id/passwordConfirm"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/passwordSignup"
+         android:layout_alignRight="@+id/passwordSignup"
+         android:layout_below="@+id/passwordSignup"
+         android:layout_marginTop="25dp"
+         android:ems="10"
+         android:hint="@string/confirmPwd"
+         android:imeActionId="@+id/login"
+         android:imeOptions="actionUnspecified"
+         android:inputType="textPassword"
+         android:maxLines="1"
+         android:singleLine="true" />
+
+   <Button
+       android:id="@+id/signupButton"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/passwordConfirm"
+       android:layout_centerHorizontal="true"
+       android:layout_marginTop="46dp"
+       android:onClick="onClick"
+       android:text="@string/sign_up" />
+    
+</RelativeLayout>

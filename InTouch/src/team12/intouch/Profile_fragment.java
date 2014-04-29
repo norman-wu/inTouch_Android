@@ -1,11 +1,15 @@
 package team12.intouch;
 
 import java.util.Locale;
+
 import com.parse.*;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
@@ -16,6 +20,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +46,7 @@ public class Profile_fragment extends Fragment implements OnClickListener {
     	//TODO need to make it final?
     	final TextView usernameBox= (TextView) v.findViewById(R.id.usernameView);
     	final TextView emailBox= (TextView) v.findViewById(R.id.emailView);
-    	
+    	final ImageView profilePictureBox = (ImageView) v.findViewById(R.id.profilePic);
     	
     	ParseUser currentUser = ParseUser.getCurrentUser(); 
     	String userRecordId = currentUser.getObjectId();
@@ -52,15 +57,28 @@ public class Profile_fragment extends Fragment implements OnClickListener {
     	query.getInBackground(userRecordId, new GetCallback<ParseObject>() {
     	  public void done(ParseObject userRecord, ParseException e) {
     	    if (e == null) {
+    	    	try {
     	      // get the user record
     	    	String username = userRecord.getString("username");
     	    	String email = userRecord.getString("email");
+    	    	ParseFile profile = (ParseFile)userRecord.get("Photo");
+    	    	byte[] image;
+				
+			    image = profile.getData(); //throw exception
+
+    	    	Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);
     	    	
     	    	email = ( email == null || email.equals(""))? "No email set up yet" : email;
     	    	username = ( username == null || username.equals(""))? "No username set up yet" : username;
     	    	
     	    	usernameBox.setText(username);
     	    	emailBox.setText(email);
+    	    	profilePictureBox.setImageBitmap(bmp);
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+    	    	
     	    } else {
     	      // something went wrong
     	     Log.e("test","error getting data from parse",e);

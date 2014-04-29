@@ -15,9 +15,8 @@ public class SignupActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		setTitle("Sign Up");
 		super.onCreate(savedInstanceState);
-		
+		setTitle("Sign Up");
 		setContentView(R.layout.activity_signup);
 	//	getWindow().setTitle("Sign up"); 
 		

@@ -5,6 +5,7 @@ import com.parse.ParseUser;
 
 import team12.intouch.adapter.FragmentViewPagerItem;
 import team12.intouch.adapter.TabsPagerAdapter;
+import team12.intouch.entities.GPSTracker;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
@@ -12,6 +13,8 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class TabActivity extends FragmentActivity implements
@@ -29,70 +32,83 @@ ActionBar.TabListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tab);
 
-		//geo update code -----------------
-		//get GeoLocation
-		ParseGeoPoint point = new ParseGeoPoint(40.46, -79.96);
+		//get geo location
+		GPSTracker gps = new GPSTracker(TabActivity.this);
+		// Check if GPS enabled
+		if(gps.canGetLocation()) {
 
-		//update it on the server
-		ParseUser currentUser = ParseUser.getCurrentUser(); 
-		currentUser.put("Location", point);
-		//Log.d("geolog", "log in: currentUser.getParseGeoPoint(Location): " + currentUser.getParseGeoPoint("Location"));
+			double latitude = gps.getLatitude();
+			double longitude = gps.getLongitude();
 
-		//userObj.put("Location", point);
-		//currentUser.put("additional","test from user put");
-		currentUser.saveEventually(); //make sure save
+			// \n is for new line
+			//Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+			Log.e("GPS","Lat: "+latitude+" Long: "+longitude);
+			
+			//geo update code -----------------
+			//get GeoLocation TODO get real geo point
+			ParseGeoPoint point = new ParseGeoPoint(latitude, longitude);
 
-		//Log.d("geolog", "log in: " + currentUser.getParseGeoPoint("Location").getLongitude());
-		//Log.d("geolog", "log in: " + currentUser.getParseGeoPoint("Location").getLongitude());
-		//geo update code ---------------------
+			//update it on the server
+			ParseUser currentUser = ParseUser.getCurrentUser(); 
+			currentUser.put("Location", point);
+			//Log.d("geolog", "log in: currentUser.getParseGeoPoint(Location): " + currentUser.getParseGeoPoint("Location"));
 
-		// Initilization
-		viewPager = (ViewPager) findViewById(R.id.pager);
-		actionBar = getActionBar();
-		mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
+			//userObj.put("Location", point);
+			//currentUser.put("additional","test from user put");
+			currentUser.saveEventually(); //make sure save
 
-		FragmentViewPagerItem nearbyFragment = new FragmentViewPagerItem(
-				"Nearby", Nearby_fragment.class);
-		mAdapter.addFragment(nearbyFragment);
+			//Log.d("geolog", "log in: " + currentUser.getParseGeoPoint("Location").getLongitude());
+			//Log.d("geolog", "log in: " + currentUser.getParseGeoPoint("Location").getLongitude());
+			//geo update code ---------------------
 
-		FragmentViewPagerItem contactsFragment = new FragmentViewPagerItem(
-				"Contacts", Contacts_fragment.class);
-		mAdapter.addFragment(contactsFragment);
+			// Initilization
+			viewPager = (ViewPager) findViewById(R.id.pager);
+			actionBar = getActionBar();
+			mAdapter = new TabsPagerAdapter(getSupportFragmentManager());
 
-		FragmentViewPagerItem profileFragment = new FragmentViewPagerItem(
-				"Profile", Profile_fragment.class);
-		mAdapter.addFragment(profileFragment);
+			FragmentViewPagerItem nearbyFragment = new FragmentViewPagerItem(
+					"Nearby", Nearby_fragment.class);
+			mAdapter.addFragment(nearbyFragment);
 
-		viewPager.setAdapter(mAdapter);
-		actionBar.setHomeButtonEnabled(false);
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);       
+			FragmentViewPagerItem contactsFragment = new FragmentViewPagerItem(
+					"Contacts", Contacts_fragment.class);
+			mAdapter.addFragment(contactsFragment);
 
-		// Adding Tabs
-		for (String tab_name : tabs) {
-			actionBar.addTab(actionBar.newTab().setText(tab_name)
-					.setTabListener(this));
+			FragmentViewPagerItem profileFragment = new FragmentViewPagerItem(
+					"Profile", Profile_fragment.class);
+			mAdapter.addFragment(profileFragment);
+
+			viewPager.setAdapter(mAdapter);
+			actionBar.setHomeButtonEnabled(false);
+			actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);       
+
+			// Adding Tabs
+			for (String tab_name : tabs) {
+				actionBar.addTab(actionBar.newTab().setText(tab_name)
+						.setTabListener(this));
+			}
+
+			/**
+			 * on swiping the viewpager make respective tab selected
+			 * */
+			viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+				@Override
+				public void onPageSelected(int position) {
+					// on changing the page
+					// make respected tab selected
+					actionBar.setSelectedNavigationItem(position);
+				}
+
+				@Override
+				public void onPageScrolled(int arg0, float arg1, int arg2) {
+				}
+
+				@Override
+				public void onPageScrollStateChanged(int arg0) {
+				}
+			});
 		}
-
-		/**
-		 * on swiping the viewpager make respective tab selected
-		 * */
-		viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-			@Override
-			public void onPageSelected(int position) {
-				// on changing the page
-				// make respected tab selected
-				actionBar.setSelectedNavigationItem(position);
-			}
-
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {
-			}
-
-			@Override
-			public void onPageScrollStateChanged(int arg0) {
-			}
-		});
 	}
 
 	@Override

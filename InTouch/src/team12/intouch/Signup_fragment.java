@@ -125,18 +125,19 @@ public class Signup_fragment extends Fragment implements OnClickListener{
 	private void signUp(final String mUsername, String mEmail, String mPassword) {
 		// TODO Auto-generated method stub
 		Toast.makeText(getActivity().getApplicationContext(), mUsername, Toast.LENGTH_SHORT).show();
-		//----------------GPS------------------
-	    GPSAPI loc = new GPSAPI();
-	    Context mcontext = null;
-		loc.createGPS(this.getActivity().getApplicationContext());
-	    //ParseGeoPoint myPoint = new ParseGeoPoint(loc.getLatitude(),loc.getLongitude());
-	    
-	    String str = new DecimalFormat("#").format(loc.getLatitude());
-	    
-	    Log.e("GPS", str);
-	    str = new DecimalFormat("#").format(loc.getLongitude());
-	    Log.e("GPS", str);
-	    
+//		//----------------GPS------------------
+//		//no longer used
+//	    GPSAPI loc = new GPSAPI();
+//	    Context mcontext = null;
+//		loc.createGPS(this.getActivity().getApplicationContext());
+//	    //ParseGeoPoint myPoint = new ParseGeoPoint(loc.getLatitude(),loc.getLongitude());
+//	    
+//	    String str = new DecimalFormat("#").format(loc.getLatitude());
+//	    
+//	    Log.e("GPS", str);
+//	    str = new DecimalFormat("#").format(loc.getLongitude());
+//	    Log.e("GPS", str);
+//	  //----------------GPS------------------
 	    
 		ParseUser user = new ParseUser();
 		user.setUsername(mUsername);

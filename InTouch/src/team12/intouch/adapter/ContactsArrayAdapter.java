@@ -45,7 +45,7 @@ public class ContactsArrayAdapter extends ArrayAdapter<ParseObject> {
 		ParseObject displayUserRecord = records[position];
 
 		String name = displayUserRecord.getString("username");
-		//String email = displayUserRecord.getString("email");
+		
 		textView.setText(name);
 
 		Log.d("tes", name+" //name from get view");
@@ -68,34 +68,6 @@ public class ContactsArrayAdapter extends ArrayAdapter<ParseObject> {
 		return rowView;
 
 	}
-//		LayoutInflater inflater = (LayoutInflater) context
-//			.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-// 
-//		View rowView = inflater.inflate(R.layout.fragment_contacts, parent, false);
-//		TextView textView = (TextView) rowView.findViewById(R.id.label);
-//		ImageView imageView = (ImageView) rowView.findViewById(R.id.logo);
-//		textView.setText(records[position]);
-// 
-//		// Change icon based on name
-//		String s = records[position];
-// 
-//		System.out.println(s);
-// 
-//		imageView.setImageResource(R.drawable.default_profile);
-		
-		
-		
-		
-		
-//		if (s.equals("WindowsMobile")) {
-//			imageView.setImageResource(R.drawable.windowsmobile_logo);
-//		} else if (s.equals("iOS")) {
-//			imageView.setImageResource(R.drawable.ios_logo);
-//		} else if (s.equals("Blackberry")) {
-//			imageView.setImageResource(R.drawable.blackberry_logo);
-//		} else {
-//			imageView.setImageResource(R.drawable.android_logo);
-//		}
-// 
+
 
 }

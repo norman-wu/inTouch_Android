@@ -46,15 +46,16 @@ public class Nearby_fragment extends ListFragment implements OnClickListener {
 
 			geoQuery.whereNear("Location", userLocation);
 			geoQuery.setLimit(10);
-
+			geoQuery.whereNotEqualTo("username", ParseUser.getCurrentUser().getUsername()); //remove current user
 
 			List<ParseObject> userRecords = geoQuery.find();
 			
 			//TODO if no nearby user
 			if(userRecords == null){return;}
 			
+		
 			
-			Log.d("test", "geoQuery.find();"+geoQuery.find().size());
+			Log.d("test", "userRecords.size"+userRecords.size());
 			ParseObject[] userRecordArray = new ParseObject[userRecords.size()];
 
 			userRecords.toArray(userRecordArray);

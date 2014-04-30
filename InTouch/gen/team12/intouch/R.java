@@ -983,7 +983,8 @@ containing a value of this type.
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
         public static final int default_profile=0x7f020057;
         public static final int fail=0x7f020058;
-        public static final int ic_launcher=0x7f020059;
+        public static final int ic_action_refresh=0x7f020059;
+        public static final int ic_launcher=0x7f02005a;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
@@ -1027,6 +1028,7 @@ containing a value of this type.
         public static final int listviewForContacts=0x7f050040;
         public static final int listviewForNearBy=0x7f050046;
         public static final int login=0x7f050043;
+        public static final int logout=0x7f050051;
         public static final int middle=0x7f050012;
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
@@ -1039,6 +1041,7 @@ containing a value of this type.
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
+        public static final int refresh=0x7f050052;
         public static final int search_badge=0x7f050032;
         public static final int search_bar=0x7f050031;
         public static final int search_button=0x7f050033;
@@ -1136,10 +1139,11 @@ containing a value of this type.
     public static final class menu {
         public static final int contacts=0x7f0c0000;
         public static final int main=0x7f0c0001;
-        public static final int nearby=0x7f0c0002;
-        public static final int profile=0x7f0c0003;
-        public static final int signup=0x7f0c0004;
-        public static final int tab=0x7f0c0005;
+        public static final int menu=0x7f0c0002;
+        public static final int nearby=0x7f0c0003;
+        public static final int profile=0x7f0c0004;
+        public static final int signup=0x7f0c0005;
+        public static final int tab=0x7f0c0006;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 

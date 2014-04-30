@@ -20,6 +20,7 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		Parse.initialize(this, "gdx6O89iizP2Jg0ibFBfW9Df27o4lA9WCXuQDf2c", "djP9wbuJnul2UIcnwyQU5t69JN4CmleqYLZfWOG5");
+		
 		if (ParseUser.getCurrentUser() != null) {
 			  // Start an intent for the logged in activity
 			  startActivity(new Intent(this, TabActivity.class));

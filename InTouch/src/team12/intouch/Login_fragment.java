@@ -23,7 +23,7 @@ import com.parse.ParseUser;
 
 public class Login_fragment extends Fragment implements OnClickListener{
 	String tag = "Login_fragment";
-	
+
 	Button loginIn = null;
 	Button signUp = null;
 	//Button forgetPass = null;
@@ -34,79 +34,79 @@ public class Login_fragment extends Fragment implements OnClickListener{
 	Boolean isInternetPresent = false;
 	// Connection detector class
 	ConnectionDetector cd;
-	
+
 	@Override
-    public void onCreate(Bundle savedInstanceState) {
-     // TODO Auto-generated method stub
-     super.onCreate(savedInstanceState);
-     		
-    }
-    
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onCreate(savedInstanceState);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-        Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-    	View v = inflater.inflate(R.layout.fragment_main, container, false);
-    	// creating connection detector class instance
-    	cd = new ConnectionDetector(getActivity().getApplicationContext());
+	}
 
-        loginIn = (Button) v.findViewById(R.id.signin);
-    	signUp = (Button) v.findViewById(R.id.signup);
-       	mUserNameEditText = (EditText) v.findViewById(R.id.username);
-    	mPasswordEditText = (EditText) v.findViewById(R.id.password);
-    	
-        loginIn.setOnClickListener(new OnClickListener() {
 
-		@Override
-		public void onClick(View v) {
-			
-		// get Internet status
-		isInternetPresent = cd.isConnectingToInternet();
-		// check for Internet status
-		if (isInternetPresent) {
-		   // Internet Connection is Present
-		   // make HTTP requests
-			attemptLogin();
-		} else {
-			// Internet connection is not present
-			// Ask user to connect to Internet
-			showAlertDialog(getActivity(), "No Internet Connection",
-					"You don't have internet connection.", false);
-		}
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		// Inflate the layout for this fragment
+		View v = inflater.inflate(R.layout.fragment_main, container, false);
+		// creating connection detector class instance
+		cd = new ConnectionDetector(getActivity().getApplicationContext());
 
-			}
-		});
-        
-        signUp.setOnClickListener(new OnClickListener() {
+		loginIn = (Button) v.findViewById(R.id.signin);
+		signUp = (Button) v.findViewById(R.id.signup);
+		mUserNameEditText = (EditText) v.findViewById(R.id.username);
+		mPasswordEditText = (EditText) v.findViewById(R.id.password);
 
-		@Override
-		public void onClick(View v) {
-			
-		//Toast.makeText(getActivity().getApplicationContext(), "the button is clicked!!!", Toast.LENGTH_SHORT).show();
+		loginIn.setOnClickListener(new OnClickListener() {
 
-		// get Internet status
-		isInternetPresent = cd.isConnectingToInternet();
-		// check for Internet status
-		if (isInternetPresent) {
-		   // Internet Connection is Present
-		   // make HTTP requests
-			Intent in =  new Intent(getActivity(), SignupActivity.class);
-			startActivity(in);
-		} else {
-			// Internet connection is not present
-			// Ask user to connect to Internet
-			showAlertDialog(getActivity(), "No Internet Connection",
-					"You don't have internet connection.", false);
-		}
+			@Override
+			public void onClick(View v) {
+
+				// get Internet status
+				isInternetPresent = cd.isConnectingToInternet();
+				// check for Internet status
+				if (isInternetPresent) {
+					// Internet Connection is Present
+					// make HTTP requests
+					attemptLogin();
+				} else {
+					// Internet connection is not present
+					// Ask user to connect to Internet
+					showAlertDialog(getActivity(), "No Internet Connection",
+							"You don't have internet connection.", false);
+				}
 
 			}
 		});
 
-    	return v;
-    }
-    
-    public void attemptLogin() {
+		signUp.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+
+				//Toast.makeText(getActivity().getApplicationContext(), "the button is clicked!!!", Toast.LENGTH_SHORT).show();
+
+				// get Internet status
+				isInternetPresent = cd.isConnectingToInternet();
+				// check for Internet status
+				if (isInternetPresent) {
+					// Internet Connection is Present
+					// make HTTP requests
+					Intent in =  new Intent(getActivity(), SignupActivity.class);
+					startActivity(in);
+				} else {
+					// Internet connection is not present
+					// Ask user to connect to Internet
+					showAlertDialog(getActivity(), "No Internet Connection",
+							"You don't have internet connection.", false);
+				}
+
+			}
+		});
+
+		return v;
+	}
+
+	public void attemptLogin() {
 
 		clearErrors();
 
@@ -123,7 +123,7 @@ public class Login_fragment extends Fragment implements OnClickListener{
 			focusView = mPasswordEditText;
 			cancel = true;
 		} 
-		
+
 		// Check for a valid email address.
 		if (TextUtils.isEmpty(username)) {
 			mUserNameEditText.setError(getString(R.string.error_field_required));
@@ -141,13 +141,13 @@ public class Login_fragment extends Fragment implements OnClickListener{
 		}
 	}
 
-    private void clearErrors(){
+	private void clearErrors(){
 		mUserNameEditText.setError(null);
 		mPasswordEditText.setError(null);
 	}
-    
-    
-    private void login(String lowerCase, String password) {
+
+
+	private void login(String lowerCase, String password) {
 		// TODO Auto-generated method stub
 		ParseUser.logInInBackground(lowerCase, password, new LogInCallback() {
 			@Override
@@ -162,25 +162,25 @@ public class Login_fragment extends Fragment implements OnClickListener{
 
 	}
 
-    protected void loginSuccessful() {
-		// TODO Auto-generated method stub
+	protected void loginSuccessful() {
 		Intent in =  new Intent(getActivity(), TabActivity.class);
 		startActivity(in);
 	}
-    
+
 	protected void loginUnSuccessful() {
 		// TODO Auto-generated method stub
+
 		Toast.makeText(getActivity().getApplicationContext(), "", Toast.LENGTH_SHORT).show();
 		showAlertDialog(getActivity(),"Login", "Username or Password is invalid.", false);
 	}
 
-    
+
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public void showAlertDialog(Context context, String title, String message, Boolean status) {
 		AlertDialog alertDialog = new AlertDialog.Builder(context).create();
@@ -204,7 +204,7 @@ public class Login_fragment extends Fragment implements OnClickListener{
 		alertDialog.show();
 	}
 
-    
-    
-    
+
+
+
 }

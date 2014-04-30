@@ -110,7 +110,7 @@ public class Signup_fragment extends Fragment implements OnClickListener{
 			// form field with an error.
 			focusView.requestFocus();
 		} else {
-			// perform the user sing up attempt.
+			// perform the user sigh up attempt.
 			Toast.makeText(getActivity().getApplicationContext(), "signing up...", Toast.LENGTH_SHORT).show();
 			signUp(name.toLowerCase(Locale.getDefault()), emailAdd, password);
 		}

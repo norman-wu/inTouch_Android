@@ -43,75 +43,71 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 public class Nearby_fragment extends ListFragment implements OnClickListener {
 
 
-	
-//	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//	        Bundle savedInstanceState) {
-//		
-//	    return inflater.inflate(R.layout.fragment_nearby, container);
-//	}
-	
+
+	//	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	//	        Bundle savedInstanceState) {
+	//		
+	//	    return inflater.inflate(R.layout.fragment_nearby, container);
+	//	}
+
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		try {
-	        
-		Log.d("test", "msg from onActivit");
 
-		//get current user
-		ParseUser currentUser = ParseUser.getCurrentUser(); 
-		//String userRecordId = currentUser.getObjectId();
+			Log.d("test", "msg from onActivit");
 
-		//get user's location
-		ParseGeoPoint userLocation = (ParseGeoPoint) currentUser.get("Location");
+			//get current user
+			ParseUser currentUser = ParseUser.getCurrentUser(); 
+			//String userRecordId = currentUser.getObjectId();
 
-		//geo query
+			//get user's location
+			ParseGeoPoint userLocation = (ParseGeoPoint) currentUser.get("Location");
+			
+			//if current user no location
+			if(userLocation == null){
+				return;
+			}
 
-		ParseQuery<ParseObject> geoQuery = ParseQuery.getQuery("_User");
+			//geo query
 
-		geoQuery.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+			ParseQuery<ParseObject> geoQuery = ParseQuery.getQuery("_User");
 
-		geoQuery.whereNear("Location", userLocation);
-		geoQuery.setLimit(10);
-		
-	
+			geoQuery.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
+
+			geoQuery.whereNear("Location", userLocation);
+			geoQuery.setLimit(10);
+
+
 			List<ParseObject> userRecords = geoQuery.find();
 			Log.d("test", "geoQuery.find();"+geoQuery.find().size());
 			ParseObject[] userRecordArray = new ParseObject[userRecords.size()];
-			
+
 			userRecords.toArray(userRecordArray);
-			
-		    String[] values = new String[] { "Android", "iPhone", "WindowsMobile",
-		            "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
-		            "Linux", "OS/2" };
-		    
+
 			Log.d("test", "message from nearby frag normal: userRecordArray.size(): "+userRecordArray);
 			NearbyAdapter adapter = new NearbyAdapter(getActivity(),userRecordArray);
 			//NearbyAdapter adapter = new NearbyAdapter(getActivity(),values);
-			
-			
-			//ListView lv = (ListView) getActivity().findViewById(R.id.listviewForNearBy);
-			
-
 
 			setListAdapter(adapter);
-			
+
 			//setListAdampter(adapter);
-			
+
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-}
+	}
 
-@Override
-public void onListItemClick(ListView l, View v, int position, long id) {
-	// do something with the data
-}
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		// do something with the data
+	}
 
-@Override
-public void onClick(View v) {
-	// TODO Auto-generated method stub
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
 
-}
+	}
 
 }

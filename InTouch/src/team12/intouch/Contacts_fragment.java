@@ -6,7 +6,6 @@ import java.util.Locale;
 import java.util.concurrent.locks.*;
 
 import team12.intouch.adapter.ContactsArrayAdapter;
-import team12.intouch.adapter.FriendQueryAdapter;
 
 import com.parse.*;
 
@@ -72,50 +71,58 @@ public class Contacts_fragment extends ListFragment {
 	private void findFriends() {
 
 		// Create query for objects of type Friend
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("Friend");
+		ParseQuery<ParseObject> friendQuery = ParseQuery.getQuery("Friend");
+		ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("_User");
 
 		// Restrict to cases where the user_id is the current user.
-		query.whereEqualTo("User_id", ParseUser.getCurrentUser());
+		friendQuery.whereEqualTo("User_id", ParseUser.getCurrentUser());
 		
-		// Run the query  
-		query.findInBackground(new FindCallback<ParseObject>() {	
-
-			@Override
-			public void done(List<ParseObject> friendList,
-					ParseException e) {
-				if (e == null) {
-					// If there are results, update the list of posts
-					// and notify the adapter
-					friends.clear();
-					Log.d("friendList", "print out the object lists");
-					Log.d("friend #", friendList.size()+"");
-					
-					for (ParseObject frd : friendList) {
-						friends.add(frd.getParseObject("Friend_id"));
-					}
-					
-					updateList();
-					
-				//  ((ArrayAdapter<ParseUser>)getListAdapter()).notifyDataSetChanged();
-				} else {
-					Log.d("No friends: ", "Error: " + e.getMessage());
-				}
-			}
-
-			private void updateList() {
-				// TODO Auto-generated method stub
-				// Create query for objects of type Friend
-				ParseQuery<ParseObject> queryUser = ParseQuery.getQuery("User");
-
-				for (ParseObject frd: friends) {
-					queryUser.whereEqualTo("User_id", frd.getObjectId());
-				}
-				queryUser.whereEqualTo("User_id", ParseUser.getCurrentUser());
-				
-				
-			}
-
-		});
+		try {
+			List<ParseObject> friendRecords = friendQuery.find();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+//		// Run the query  
+//		query.findInBackground(new FindCallback<ParseObject>() {	
+//
+//			@Override
+//			public void done(List<ParseObject> friendList,
+//					ParseException e) {
+//				if (e == null) {
+//					// If there are results, update the list of posts
+//					// and notify the adapter
+//					friends.clear();
+//					Log.d("friendList", "print out the object lists");
+//					Log.d("friend #", friendList.size()+"");
+//					
+//					for (ParseObject frd : friendList) {
+//						friends.add(frd.getParseObject("Friend_id"));
+//					}
+//					
+//					updateList();
+//					
+//				//  ((ArrayAdapter<ParseUser>)getListAdapter()).notifyDataSetChanged();
+//				} else {
+//					Log.d("No friends: ", "Error: " + e.getMessage());
+//				}
+//			}
+//
+//			private void updateList() {
+//				// TODO Auto-generated method stub
+//				// Create query for objects of type Friend
+//				ParseQuery<ParseObject> queryUser = ParseQuery.getQuery("User");
+//
+//				for (ParseObject frd: friends) {
+//					queryUser.whereEqualTo("User_id", frd.getObjectId());
+//				}
+//				queryUser.whereEqualTo("User_id", ParseUser.getCurrentUser());
+//				
+//				
+//			}
+//
+//		});
 		
     }
 }

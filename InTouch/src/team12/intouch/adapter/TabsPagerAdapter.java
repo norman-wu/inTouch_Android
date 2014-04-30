@@ -3,11 +3,9 @@ package team12.intouch.adapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import team12.intouch.*;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.ListFragment;
  
 public class TabsPagerAdapter extends FragmentPagerAdapter {
 	

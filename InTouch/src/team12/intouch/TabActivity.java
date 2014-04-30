@@ -1,7 +1,7 @@
 package team12.intouch;
 
-import java.util.Locale;
-import team12.intouch.adapter.*;
+import team12.intouch.adapter.FragmentViewPagerItem;
+import team12.intouch.adapter.TabsPagerAdapter;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;

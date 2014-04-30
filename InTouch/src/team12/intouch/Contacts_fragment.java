@@ -2,61 +2,38 @@ package team12.intouch;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.locks.*;
 
 import team12.intouch.adapter.ContactsArrayAdapter;
-
-import com.parse.*;
-
-import android.annotation.SuppressLint;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
-import android.text.TextUtils;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
-public class Contacts_fragment extends ListFragment {
 
-	// Create the Post object
+public class Contacts_fragment extends ListFragment implements OnClickListener{
+
+	// Create display object
 	ArrayList<ParseObject> friends;
 	ArrayList<String> objectIds;
 			
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		
 		friends = new ArrayList<ParseObject>();
 		objectIds = new ArrayList<String>();
-		findFriends();
-		final String[] users = {"norman","qiulu","mark"};
-		setListAdapter(new ContactsArrayAdapter(getActivity(), users));
+		ParseObject[] friends = findFriends();
+		
+		if(friends == null){return;}  //TODO no contacts
+		
+		setListAdapter(new ContactsArrayAdapter(getActivity(), friends));
 	}
-
-//	@Override
-//	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//			Bundle savedInstanceState) {
-//
-//		// Inflate the layout for this fragment
-//		View v = inflater.inflate(R.layout.fragment_profile, container, false);
-//
-//		friends = new ArrayList<ParseObject>();
-//		updateFriendList();		
-//		return v;
-//	}
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
@@ -68,8 +45,8 @@ public class Contacts_fragment extends ListFragment {
 	}
 
 	//query the friend lists
-	private void findFriends() {
-
+	private ParseObject[] findFriends() {
+		ParseObject[] friendsObjectArray;
 		// Create query for objects of type Friend
 		ParseQuery<ParseObject> friendQuery = ParseQuery.getQuery("Friend");
 		ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("_User");
@@ -78,51 +55,41 @@ public class Contacts_fragment extends ListFragment {
 		friendQuery.whereEqualTo("User_id", ParseUser.getCurrentUser());
 		
 		try {
+		
 			List<ParseObject> friendRecords = friendQuery.find();
-		} catch (ParseException e) {
+			int numOfFriends = friendRecords.size();
+			friendsObjectArray = new ParseObject[numOfFriends];
+			
+			if(numOfFriends==0){ //no friend
+				return null;
+			}
+			
+			ParseObject[] friendRecordsArray = new ParseObject[numOfFriends];
+			friendRecords.toArray(friendRecordsArray);
+			
+			for(int i = 0; i < numOfFriends; i++){
+				ParseObject friendRecord = friendRecordsArray[i];
+				ParseUser friend = friendRecord.getParseUser("Friend_id");
+				ParseObject friendObject = userQuery.get(friend.getObjectId());
+				friendsObjectArray[i] = friendObject;
+				
+			}
+	
+			return friendsObjectArray;
+			
+			
+		} catch (Exception e) {//no friend
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			return null;
 		}
 		
-//		// Run the query  
-//		query.findInBackground(new FindCallback<ParseObject>() {	
-//
-//			@Override
-//			public void done(List<ParseObject> friendList,
-//					ParseException e) {
-//				if (e == null) {
-//					// If there are results, update the list of posts
-//					// and notify the adapter
-//					friends.clear();
-//					Log.d("friendList", "print out the object lists");
-//					Log.d("friend #", friendList.size()+"");
-//					
-//					for (ParseObject frd : friendList) {
-//						friends.add(frd.getParseObject("Friend_id"));
-//					}
-//					
-//					updateList();
-//					
-//				//  ((ArrayAdapter<ParseUser>)getListAdapter()).notifyDataSetChanged();
-//				} else {
-//					Log.d("No friends: ", "Error: " + e.getMessage());
-//				}
-//			}
-//
-//			private void updateList() {
-//				// TODO Auto-generated method stub
-//				// Create query for objects of type Friend
-//				ParseQuery<ParseObject> queryUser = ParseQuery.getQuery("User");
-//
-//				for (ParseObject frd: friends) {
-//					queryUser.whereEqualTo("User_id", frd.getObjectId());
-//				}
-//				queryUser.whereEqualTo("User_id", ParseUser.getCurrentUser());
-//				
-//				
-//			}
-//
-//		});
 		
     }
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		
+	}
 }

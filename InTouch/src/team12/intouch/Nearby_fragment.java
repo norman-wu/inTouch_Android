@@ -1,54 +1,22 @@
 package team12.intouch;
 
 import java.util.List;
-import java.util.Locale;
 
 import team12.intouch.adapter.NearbyAdapter;
-
-import com.parse.*;
-
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.AdapterContextMenuInfo;
+
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class Nearby_fragment extends ListFragment implements OnClickListener {
-
-
-
-	//	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	//	        Bundle savedInstanceState) {
-	//		
-	//	    return inflater.inflate(R.layout.fragment_nearby, container);
-	//	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -64,8 +32,9 @@ public class Nearby_fragment extends ListFragment implements OnClickListener {
 			//get user's location
 			ParseGeoPoint userLocation = (ParseGeoPoint) currentUser.get("Location");
 			
-			//if current user no location
+			//TODO if current user no location
 			if(userLocation == null){
+				Log.d("test3","no current user location for username: "+currentUser.getUsername());
 				return;
 			}
 
@@ -80,6 +49,11 @@ public class Nearby_fragment extends ListFragment implements OnClickListener {
 
 
 			List<ParseObject> userRecords = geoQuery.find();
+			
+			//TODO if no nearby user
+			if(userRecords == null){return;}
+			
+			
 			Log.d("test", "geoQuery.find();"+geoQuery.find().size());
 			ParseObject[] userRecordArray = new ParseObject[userRecords.size()];
 

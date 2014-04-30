@@ -3,11 +3,7 @@ package team12.intouch;
 import java.text.DecimalFormat;
 import java.util.Locale;
 
-import com.parse.ParseException;
-import com.parse.ParseGeoPoint;
-import com.parse.ParseUser;
-import com.parse.SignUpCallback;
-
+import team12.intouch.entities.GPSAPI;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -17,13 +13,15 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import team12.intouch.entities.*;
-import android.content.*;
+
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 public class Signup_fragment extends Fragment implements OnClickListener{
 	
 	private Button signUp;

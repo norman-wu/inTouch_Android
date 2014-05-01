@@ -988,6 +988,8 @@ containing a value of this type.
         public static final int ic_action_add_person=0x7f02005a;
         public static final int ic_action_refresh=0x7f02005b;
         public static final int ic_launcher=0x7f02005c;
+        public static final int signin=0x7f02005d;
+        public static final int tlogo=0x7f02005e;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;

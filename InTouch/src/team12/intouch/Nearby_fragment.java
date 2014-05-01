@@ -41,6 +41,17 @@ public class Nearby_fragment extends ListFragment implements OnClickListener {
 			//geo query
 
 			ParseQuery<ParseObject> geoQuery = ParseQuery.getQuery("_User");
+			
+			// Create query for objects of type Friend
+			ParseQuery<ParseObject> friendQuery = ParseQuery.getQuery("Friend");
+			friendQuery.whereEqualTo("User_id", ParseUser.getCurrentUser());
+			List<ParseObject> friends = friendQuery.find();
+			Log.d("nearby", ""+friends.size());
+			ParseObject[] friendList = new ParseObject[friends.size()];
+			
+			if (friendList.length > 0) {
+				friends.toArray(friendList);
+			}
 
 			geoQuery.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
 
@@ -52,16 +63,14 @@ public class Nearby_fragment extends ListFragment implements OnClickListener {
 			
 			//TODO if no nearby user
 			if(userRecords == null){return;}
-			
-		
-			
+				
 			Log.d("test", "userRecords.size"+userRecords.size());
 			ParseObject[] userRecordArray = new ParseObject[userRecords.size()];
 
 			userRecords.toArray(userRecordArray);
 
 			Log.d("test", "message from nearby frag normal: userRecordArray.size(): "+userRecordArray);
-			NearbyAdapter adapter = new NearbyAdapter(getActivity(),userRecordArray);
+			NearbyAdapter adapter = new NearbyAdapter(getActivity(),userRecordArray, friendList);
 			//NearbyAdapter adapter = new NearbyAdapter(getActivity(),values);
 
 			setListAdapter(adapter);

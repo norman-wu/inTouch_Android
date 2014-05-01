@@ -57,8 +57,11 @@ public class ContactsArrayAdapter extends ArrayAdapter<ParseObject> {
 		byte[] image;
 		try {
 			image = profile.getData(); //throw exception
+			Log.e("image", (image==null) + "");
+			if(image==null){
 			Bitmap bmp = BitmapFactory.decodeByteArray(image, 0, image.length);
 			imageView.setImageBitmap(bmp);
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			imageView.setImageResource(R.drawable.default_profile);

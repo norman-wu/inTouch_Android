@@ -143,7 +143,7 @@ ActionBar.TabListener {
         	return true;
         }
         case R.id.refresh:
-            // location found
+            // locatioan found
           //  LocationFound();
             return true;
         default:
